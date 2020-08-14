@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Pagination from './components/Pagination';
+import Pokemon from './components/Pokemon';
 
 import { useFetchPokemon } from '../../hooks/useFetchPokemon';
 import { Container } from './styles';
 import { PokemonDataProps } from './types';
 
-const Home: React.FC = () => {
-  const [offset, setOffset] = useState(0);
+interface HomeProps {
+  offset: number;
+  setOffset: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Home: React.FC<HomeProps> = ({ offset, setOffset }: HomeProps) => {
   const { data } = useFetchPokemon<PokemonDataProps>(
     `pokemon?offset=${offset}`,
     {
@@ -19,10 +24,14 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      {/* <Pokemon data={data} /> */}
+      <Pokemon url={data.results[0].url} />
       <Pagination count={data?.count} />
       <button type="button" onClick={() => setOffset((state) => state + 1)}>
-        Page {String(offset)}
+        Proximo
+      </button>
+      <p>{String(offset)}</p>
+      <button type="button" onClick={() => setOffset((state) => state - 1)}>
+        Anterior
       </button>
     </Container>
   );

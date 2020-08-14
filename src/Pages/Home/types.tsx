@@ -5,12 +5,14 @@ export interface PokemonDataProps {
     url: string;
   }[];
 }
-interface PokemonDetailsProps {
+export interface PokemonDetailsProps {
   id: number;
   name: string;
   sprites: {
     other: {
-      'official-artwork': string;
+      'official-artwork': {
+        front_default: string;
+      };
     };
   };
 }
