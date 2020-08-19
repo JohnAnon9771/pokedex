@@ -5,6 +5,7 @@ export interface PokemonDataProps {
     url: string;
   }[];
 }
+
 export interface PokemonDetailsProps {
   id: number;
   name: string;
