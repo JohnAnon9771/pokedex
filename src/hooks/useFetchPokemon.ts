@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import Axios, { AxiosResponse } from 'axios';
 import useSWR from 'swr';
 
-import { PokemonDetailsProps, PokemonDataProps } from '../Pages/Home/types';
 import api from '../services/api';
 
 export function useFetchPokemon<Error>(
@@ -39,13 +38,16 @@ export function useFetchPokemon<Error>(
         setDetails(response?.data);
       } catch (err) {
         if (err) {
-          throw new Error(err);
+          console.log('cancelled');
         }
       }
     }
     getDetailsPokemon();
+    console.log('fetch details');
     return () => source.cancel();
   }, [data]);
+
+  useEffect(() => console.log('fetch pokemon', details));
 
   return { details, data, error };
 }

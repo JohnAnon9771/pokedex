@@ -1,15 +1,21 @@
-import React, { useEffect } from 'react';
-
-interface PaginationComponentProps {
-  count: number | undefined;
-}
+import React, { useEffect, memo } from 'react';
 
 const Pagination: React.FC<PaginationComponentProps> = ({
   count,
+  setOffset,
 }: PaginationComponentProps) => {
   useEffect(() => console.log('render pagination'));
 
-  return <h1>Pagination</h1>;
+  return (
+    <>
+      <button type="button" onClick={() => setOffset((state) => state - 1)}>
+        Ant
+      </button>
+      <button type="button" onClick={() => setOffset((state) => state + 1)}>
+        Prox
+      </button>
+    </>
+  );
 };
 
-export default Pagination;
+export default memo(Pagination);

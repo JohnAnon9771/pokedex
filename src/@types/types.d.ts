@@ -1,4 +1,4 @@
-export interface PokemonDataProps {
+interface PokemonDataProps {
   count: number;
   results: {
     name: string;
@@ -6,7 +6,7 @@ export interface PokemonDataProps {
   }[];
 }
 
-export interface PokemonDetailsProps {
+interface PokemonDetailsProps {
   id: number;
   name: string;
   sprites: {
