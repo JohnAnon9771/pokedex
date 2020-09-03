@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from 'react';
+import React, { memo, useEffect } from 'react';
 
 const Pagination: React.FC<PaginationComponentProps> = ({
   count,
@@ -17,5 +17,4 @@ const Pagination: React.FC<PaginationComponentProps> = ({
     </>
   );
 };
-
 export default memo(Pagination);

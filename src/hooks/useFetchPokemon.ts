@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import Axios, { AxiosResponse } from 'axios';
 import useSWR from 'swr';
 
 import api from '../services/api';
@@ -9,45 +8,23 @@ export function useFetchPokemon<Error>(
   urlFetch: string,
   config?: { params: { limit: number } },
 ): {
-  details: PokemonDetailsProps | undefined;
-  data: PokemonDataProps | undefined;
+  data: DataPokemon | undefined;
   error: Error | undefined;
 } {
-  const [details, setDetails] = useState<PokemonDetailsProps>();
-
-  const { data, error } = useSWR<PokemonDataProps, Error>(
+  const { data, error } = useSWR<DataPokemon, Error>(
     urlFetch,
     async (urlPoke: string) => {
-      const response = await api.get(urlPoke, config);
-      return response.data;
+      const { data: pokemonData } = await api.get<Data>(urlPoke, config);
+      const response = await api.get(
+        `pokemon-species/${pokemonData.results[0].name}`,
+      );
+      const details = await api.get(`pokemon/${pokemonData.results[0].name}`);
+
+      return { ...response.data, pokemonData, details: details.data };
     },
   );
 
-  useEffect(() => {
-    const { CancelToken } = Axios;
-    const source = CancelToken.source();
-    async function getDetailsPokemon() {
-      try {
-        let response: AxiosResponse;
-        if (data?.results) {
-          const { url } = data?.results[0];
-          response = await api.get<PokemonDetailsProps>(url, {
-            cancelToken: source.token,
-          });
-        }
-        setDetails(response?.data);
-      } catch (err) {
-        if (err) {
-          console.log('cancelled');
-        }
-      }
-    }
-    getDetailsPokemon();
-    console.log('fetch details');
-    return () => source.cancel();
-  }, [data]);
+  useEffect(() => console.log('render fetch pokemon'));
 
-  useEffect(() => console.log('fetch pokemon', details));
-
-  return { details, data, error };
+  return { data, error };
 }

@@ -5,8 +5,7 @@ import Pokemon from './components/Pokemon';
 import { Container } from './styles';
 
 const Home: React.FC = () => {
-  useEffect(() => console.log('home'));
-
+  useEffect(() => console.log('render home'));
   return (
     <Container>
       <Pokemon />
