@@ -1,37 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-import { useFetchPokemon } from '../../../../hooks/useFetchPokemon';
-import Pagination from '../Pagination';
 import { Container, Header, Main } from './styles';
 
-const Pokemon: React.FC = () => {
-  const [offset, setOffset] = useState(0);
-  const { data } = useFetchPokemon(`pokemon?offset=${offset}`, {
-    params: { limit: 1 },
-  });
-
+const Pokemon: React.FC<PokemonComponentProps> = ({
+  pokemon,
+}: PokemonComponentProps) => {
   useEffect(() => console.log('render pokemon'));
 
   return (
-    <>
-      <Pagination count={data?.pokemonData.count} {...{ setOffset }} />
-      <Container>
-        <Header>
-          <p>#{data?.id}</p>
-          <h1>{data?.name}</h1>
-        </Header>
-        <Main>
-          <img
-            src={
-              data?.details?.sprites?.other['official-artwork'].front_default
-            }
-            alt=""
-            srcSet=""
-          />
-        </Main>
-        <p>{data?.names[0].name}</p>
-      </Container>
-    </>
+    <Container>
+      <Header>
+        <p>#{pokemon?.id}</p>
+        <h1>{pokemon?.name}</h1>
+      </Header>
+      <Main>
+        <img
+          src={
+            pokemon?.details?.sprites?.other['official-artwork'].front_default
+          }
+          alt=""
+          srcSet=""
+        />
+      </Main>
+      <p>{pokemon?.names[0].name}</p>
+    </Container>
   );
 };
 

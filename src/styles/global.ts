@@ -14,17 +14,21 @@ export default createGlobalStyle`
     justify-content: center;
     align-items: center;
   }
+
   html, body, #root {
     min-height: 100%;
     height: 100%;
   }
+
   body {
     -webkit-font-smoothing: antialiased !important;
   }
+
   body, input, button {
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
   }
+  
   button {
     cursor: pointer;
   }

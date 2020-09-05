@@ -4,7 +4,7 @@ const Pagination: React.FC<PaginationComponentProps> = ({
   count,
   setOffset,
 }: PaginationComponentProps) => {
-  useEffect(() => console.log('render pagination'));
+  useEffect(() => console.log('render pagination', count));
 
   return (
     <>
